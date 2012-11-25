@@ -78,7 +78,7 @@ function run() {
     , mutate_storages = parsed['mutate-storage-vars']
     , display_optional_whitespace = parsed.whitespace
     , output = parsed.output ? fs.createWriteStream(parsed.output) : process.stdout
-    , inputs = stdintty ? [process.stdin] : parsed.argv.remain.map(to_stream)
+    , inputs = !stdintty ? [process.stdin] : parsed.argv.remain.map(to_stream)
     , output_guards = inputs.length > 1
     , idx = 0
     , current = inputs[idx]
