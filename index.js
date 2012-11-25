@@ -40,7 +40,13 @@ glslmin [-w|--whitespace] [-h|--help] [-o|--output file] [-m|--mutate-storage-va
 
   if no output option is defined, output will be written to stdout.
 
-  if multiple files are passed, #ifdef/#endif guards will be created for each file.
+  if multiple files are passed, #ifdef/#endif guards will be created for each file. the definition, per-file, will be the
+  provided path to the file with all non-character and non-digit characters transformed to `_`, and uppercased.
+
+  example of file guard: "path/to/my-file.glsl" -> "#ifdef PATH_TO_MY_FILE_GLSL"
+
+  to use a specific file within a bundle, simply prepend the file data with `#define MY_FILE_GLSL` before passing it to
+  gl<Fragment|Vertex>Source.
 
   arguments:
 
@@ -102,7 +108,7 @@ function run() {
     current
       .pipe(tokenizer())
       .pipe(parser())
-      .pipe(minify())
+      .pipe(minify(safe_words, !!mutate_storages))
       .pipe(deparser(!!display_optional_whitespace))
         .on('end', function() {
             last = current
