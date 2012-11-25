@@ -1,0 +1,34 @@
+{
+  "name": "glslmin",
+  "version": "0.0.0",
+  "description": "CLI tool to minify glsl programs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "glslmin": "./bin/glslmin"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/chrisdickinson/glslmin.git"
+  },
+  "keywords": [
+    "cli",
+    "minifier",
+    "glsl"
+  ],
+  "author": "Chris Dickinson <chris@neversaw.us>",
+  "license": "MIT",
+  "preferGlobal": "true",
+  "dependencies": {
+    "glsl-tokenizer": "0.0.6",
+    "glsl-parser": "0.0.1",
+    "nopt": "~2.0.0",
+    "glsl-deparser": "0.0.1",
+    "glsl-min-stream": "0.0.2",
+    "cssauron": "0.0.2",
+    "cssauron-glsl": "0.0.0",
+    "through": "~1.1.2"
+  }
+}
