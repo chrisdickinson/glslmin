@@ -1,5 +1,4 @@
-var tty = require('tty')
-  , nopt = require('nopt')
+var nopt = require('nopt')
   , path = require('path')
   , fs = require('fs')
   , shorthand
@@ -74,9 +73,8 @@ glslmin [-w|--whitespace] [-h|--help] [-o|--output file] [-m|--mutate-storage-va
 
 function run() {
   var parsed = nopt(options, shorthand)
-    , stdintty = tty.isatty(process.stdin)
 
-  if(parsed.help || (!parsed.argv.remain.length && stdintty)) {
+  if(parsed.help) {
     return help(), process.exit(1)
   }
 
@@ -84,7 +82,7 @@ function run() {
     , mutate_storages = parsed['mutate-storage-vars']
     , display_optional_whitespace = parsed.whitespace
     , output = parsed.output ? fs.createWriteStream(parsed.output) : process.stdout
-    , inputs = !stdintty ? [process.stdin] : parsed.argv.remain.map(to_stream)
+    , inputs = parsed.argv.remain.length ? parsed.argv.remain.map(to_stream) : [process.stdin]
     , output_guards = inputs.length > 1
     , idx = 0
     , current = inputs[idx]
@@ -131,6 +129,7 @@ function run() {
 
 
 function to_stream(p) {
+  if (p === '-') return process.stdin
   var stream = fs.createReadStream(path.resolve(p))
   stream.filename = p
   return stream
